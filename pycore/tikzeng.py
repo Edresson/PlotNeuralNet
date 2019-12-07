@@ -18,9 +18,18 @@ def to_cor():
 \def\PoolColor{rgb:red,1;black,0.3}
 \def\UnpoolColor{rgb:blue,2;green,1;black,0.3}
 \def\FcColor{rgb:blue,5;red,2.5;white,5}
-\def\FcReluColor{rgb:blue,5;red,5;white,4}
+\def\FcReluColor{rgb:red,74;green,9;blue,237}
+\def\FceluColor{rgb:red,88;green,204;blue,31}
+\def\FcSoftmaxColor{rgb:magenta,5;black,7}   
 \def\SoftmaxColor{rgb:magenta,5;black,7}   
+\def\FcEluColor{rgb:red,88;green,204;blue,31}
+\def\FcCreluColor{rgb:red,5;green,255;blue,245}
+\def\DropoutColor{rgb:red,252;green,3;blue,23}
+\def\LnormDropoutColor{rgb:red,14;green,14;blue,252}
+\def\RNNColor{rgb:red,236;green,240;blue,7}
+}
 """
+
 
 def to_begin():
     return r"""
@@ -77,13 +86,15 @@ def to_ConvConvRelu( name, s_filer=256, n_filer=(64,64), offset="(0,0,0)", to="(
 
 
 
-# Pool
-def to_Pool(name, offset="(0,0,0)", to="(0,0,0)", width=1, height=32, depth=32, opacity=0.5, caption=" "):
+# Pool5.5
+def to_Pool(name,xlabel='',zlabel='', offset="(0,0,0)", to="(0,0,0)", width=1, height=32, depth=32, opacity=0.5, caption=" "):
     return r"""
-\pic[shift={ """+ offset +""" }] at """+ to +""" 
+\pic[shift={"""+ offset +"""}] at """+ to +""" 
     {Box={
-        name="""+name+""",
+        name=""" + name +""",
         caption="""+ caption +r""",
+        xlabel={{"""+ str(xlabel) +""", }},
+        zlabel="""+ str(zlabel) +""",
         fill=\PoolColor,
         opacity="""+ str(opacity) +""",
         height="""+ str(height) +""",
@@ -93,6 +104,11 @@ def to_Pool(name, offset="(0,0,0)", to="(0,0,0)", width=1, height=32, depth=32, 
     };
 """
 
+
+
+
+
+
 # unpool4, 
 def to_UnPool(name, offset="(0,0,0)", to="(0,0,0)", width=1, height=32, depth=32, opacity=0.5, caption=" "):
     return r"""
@@ -100,11 +116,6 @@ def to_UnPool(name, offset="(0,0,0)", to="(0,0,0)", width=1, height=32, depth=32
     {Box={
         name="""+ name +r""",
         caption="""+ caption +r""",
-        fill=\UnpoolColor,
-        opacity="""+ str(opacity) +""",
-        height="""+ str(height) +""",
-        width="""+ str(width) +""",
-        depth="""+ str(depth) +"""
         }
     };
 """
@@ -157,6 +168,60 @@ def to_SoftMax( name, s_filer=10, offset="(0,0,0)", to="(0,0,0)", width=1.5, hei
         zlabel="""+ str(s_filer) +""",
         fill=\SoftmaxColor,
         opacity="""+ str(opacity) +""",
+        height="""+ str(height) +""",
+        width="""+ str(width) +""",
+        depth="""+ str(depth) +"""
+        }
+    };
+"""
+
+#Dense
+def to_Dropout( name, dp_rate="50%", offset="(0,0,0)", to="(0,0,0)", width=1.5, height=3, depth=25, caption=" ",Color ="\DropoutColor"):
+    return r"""
+\pic[shift={"""+ offset +"""}] at """+ to +""" 
+    {RightBandedBox={
+        name=""" + name +""",
+        caption="""+ caption +""",
+        xlabel={{" ",""}},
+        zlabel="""+ str(dp_rate) +""",
+        bandfill="""+ Color +""",
+        fill=\DropoutColor,
+        height="""+ str(height) +""",
+        width="""+ str(width) +""",
+        depth="""+ str(depth) +"""
+        }
+    };
+"""
+
+#Dense
+def to_Dense( name, s_filer=4096, offset="(0,0,0)", to="(0,0,0)", width=3, height=3, depth=100, caption=" ",Color ="\FcReluColor"):
+    return r"""
+\pic[shift={"""+ offset +"""}] at """+ to +""" 
+    {RightBandedBox={
+        name=""" + name +""",
+        caption="""+ caption +""",
+        xlabel={{" ",""}},
+        zlabel="""+ str(s_filer) +""",
+        fill=\FcColor,
+        bandfill="""+ Color +""",
+        height="""+ str(height) +""",
+        width="""+ str(width) +""",
+        depth="""+ str(depth) +"""
+        }
+    };
+"""
+
+#RNN
+def to_Rnn( name, s_filer=4096, offset="(0,0,0)", to="(0,0,0)", width=5, height=5, depth=5, caption=" ",Color ="\FcReluColor"):
+    return r"""
+\pic[shift={"""+ offset +"""}] at """+ to +""" 
+    {RightBandedBox={
+        name=""" + name +""",
+        caption="""+ caption +""",
+        xlabel={{" ",""}},
+        zlabel="""+ str(s_filer) +""",
+        fill=\RnnColor,
+        bandfill="""+ Color +""",
         height="""+ str(height) +""",
         width="""+ str(width) +""",
         depth="""+ str(depth) +"""

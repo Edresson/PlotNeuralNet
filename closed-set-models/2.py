@@ -32,15 +32,15 @@ arch = [
     to_Conv("conv4", "7x7", 1, offset="(12,0,0)", to="(0,0,0)",width=1, height=4, depth=12, caption="Conv CReLU" ),
     to_connection("maxpool3","conv4"),
 
-    to_Dropout( "dp1", dp_rate="LNorm+Dropout 40\%", offset="(14,0.0,0)", to="(0,0,0)", width=1.5, height=3, depth=25, caption="", Color='\LnormDropoutColor'),
+    to_Dropout( "dp1", dp_rate="BNorm+Dropout 40\%", offset="(14,0.0,0)", to="(0,0,0)", width=1.5, height=3, depth=25, caption="", Color='\LnormDropoutColor'),
 
     to_connection("conv4","dp1"),
-    to_Dense("dense2", 200 ,offset="(16,0,0)", caption="FC1 ELU",depth=60,Color ="\FcEluColor" ),
+    to_Dense("dense2", 200 ,offset="(16,0,0)", caption="FC ELU",depth=60,Color ="\FcEluColor" ),
     #to_SoftMax("soft2", 10 ,"(5,0,0)", caption="SoftMax"  ),
     to_connection("dp1","dense2"),
     to_Dropout( "dp2", dp_rate="Dropout 40\%", offset="(18,0.0,0)", to="(0,0,0)", width=1.5, height=3, depth=25),
     to_connection("dense2","dp2"),
-    to_Dense("dense3", 20 ,offset="(20,0,0)", caption="FC2 SoftMax",Color ="\FcSoftmaxColor",depth=30 ),
+    to_Dense("dense3", 20 ,offset="(20,0,0)", caption="FC SoftMax",Color ="\FcSoftmaxColor",depth=30 ),
     to_connection("dp2","dense3"),
     
     #to_connection("dense1", "soft1"),  

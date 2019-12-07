@@ -26,7 +26,7 @@ def to_cor():
 \def\FcCreluColor{rgb:red,5;green,255;blue,245}
 \def\DropoutColor{rgb:red,252;green,3;blue,23}
 \def\LnormDropoutColor{rgb:red,14;green,14;blue,252}
-\def\RNNColor{rgb:red,236;green,240;blue,7}
+\def\RnnColor{rgb:red,236;green,240;blue,7}
 }
 """
 

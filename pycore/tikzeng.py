@@ -19,11 +19,11 @@ def to_cor():
 \def\UnpoolColor{rgb:blue,2;green,1;black,0.3}
 \def\FcColor{rgb:blue,5;red,2.5;white,5}
 \def\FcReluColor{rgb:red,74;green,9;blue,237}
-\def\FceluColor{rgb:red,88;green,204;blue,31}
 \def\FcSoftmaxColor{rgb:magenta,5;black,7}   
 \def\SoftmaxColor{rgb:magenta,5;black,7}   
 \def\FcEluColor{rgb:red,88;green,204;blue,31}
 \def\FcCreluColor{rgb:red,5;green,255;blue,245}
+\def\FcLinearColor{rgb:red,161;green,252;blue,3}
 \def\DropoutColor{rgb:red,252;green,3;blue,23}
 \def\LnormDropoutColor{rgb:red,14;green,14;blue,252}
 \def\RnnColor{rgb:red,236;green,240;blue,7}
@@ -45,9 +45,14 @@ def to_begin():
 
 def to_input( pathfile, to='(-3,0,0)', width=8, height=8, name="temp" ):
     return r"""
+
 \node[canvas is zy plane at x=0] (""" + name + """) at """+ to +""" {\includegraphics[width="""+ str(width)+"cm"+""",height="""+ str(height)+"cm"+"""]{"""+ pathfile +"""}};
 """
 
+def to_output( pathfile, to='(-3,0,0)', width=8, height=8, name="temp" ):
+    return r"""
+\node[canvas is zy plane at x=0] (""" + name + """) at """+ to +""" {\includegraphics[width="""+ str(width)+"cm"+""",height="""+ str(height)+"cm"+"""]{"""+ pathfile +"""}};
+"""
 # Conv
 def to_Conv( name, s_filer=256, n_filer=64, offset="(0,0,0)", to="(0,0,0)", width=1, height=40, depth=40, caption=" " ):
     return r"""
